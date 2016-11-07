@@ -43,6 +43,27 @@ var Eventutil = {
 		return null;
 		}
 	}
+	//获取鼠标按键的button值，0-左键；1-滚轮；2-右键；
+	getButton: function (event){
+		if (document.implementation.hasFeature("MouseEvents","2.0")){
+		return event.button;
+		}
+		else {
+		  switch (event.button){
+			  case 0:
+			  case 1:
+			  case 3:
+			  case 5:
+			  case 7:
+				  return 0;break;
+			  case 2:
+			  case 6:
+				  return 2;break;
+			  case 4:
+				  return 1;
+		  }
+		}
+	}
 	removeHandler: function (element,type,handler){
 		if (element.removeEventListener){
 			element.removeEventListener(type,handler,false);
