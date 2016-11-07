@@ -49,6 +49,7 @@ var Eventutil = {
 		return event.button;
 		}
 		else {
+			//IE8以下的不支持DOM的button属性
 		  switch (event.button){
 			  case 0:
 			  case 1:
