@@ -12,6 +12,21 @@ var Eventutil = {
 			element["on"+type] = handler; //DOM 0级事件处理程序
 		}
 	}
+	//跨浏览器的事件对象
+	getEvent: function (event){
+		return event ? event :window.event;
+	}
+	getTarget: function (event){
+		return event.target || event.srcElement;
+	}
+	preventDefault: function (event){
+		if (event.preventDefault){
+		event.preventDefault();
+		}
+		else {
+		event.returnValue = false;
+		}
+	}
 	removeHandler: function (element,type,handler){
 		if (element.removeEventListener){
 			element.removeEventListener(type,handler,false);
@@ -21,6 +36,14 @@ var Eventutil = {
 		}
 		else {
 			element["on"+type] = null;
+		}
+	}
+	stopPropagation: function (event){
+		if (event.stopPropagation){
+		event.stopPropagation();
+		}
+		else {
+		event.cancelBubble = true;
 		}
 	}
 }
