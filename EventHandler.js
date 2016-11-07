@@ -11,14 +11,14 @@ var Eventutil = {
 		else{
 			element["on"+type] = handler; //DOM 0级事件处理程序
 		}
-	}
+	},
 	//跨浏览器的事件对象
 	getEvent: function (event){
 		return event ? event :window.event;
-	}
+	},
 	getTarget: function (event){
 		return event.target || event.srcElement;
-	}
+	},
 	//阻止默认事件
 	preventDefault: function (event){
 		if (event.preventDefault){
@@ -27,7 +27,7 @@ var Eventutil = {
 		else {
 		event.returnValue = false;
 		}
-	}
+	},
 	//提供 mouseover,mouseout事件的相关元素的信息
 	getRelatedTarget: function (event){
 		if (event.relatedTarget){
@@ -42,7 +42,7 @@ var Eventutil = {
 		else {
 		return null;
 		}
-	}
+	},
 	//获取鼠标按键的button值，0-左键；1-滚轮；2-右键；
 	getButton: function (event){
 		if (document.implementation.hasFeature("MouseEvents","2.0")){
@@ -64,7 +64,18 @@ var Eventutil = {
 				  return 1;
 		  }
 		}
-	}
+	},
+	//滚轮事件：
+	//Firefox：DOMMouseScroll事件（老版本）/wheel(新版本)，有关滚轮的信息保存在detail属性中，向前滚=>-3的倍数，向后滚=>3 的倍数；
+	//其他浏览器：mouseWheel事件，滚轮信息保存在wheelDelta中，向前滚=>120的倍数，向后滚=>-120 的倍数
+	getWheelDelta: function (event){
+		if (event.wheelDelta){
+			return (client.engine.opera && client.engine.opera < 9.5 ? -event.wheelDelta : event.wheelDelta);
+		}
+		else {
+			return -event.detail*40;
+		}
+	},
 	removeHandler: function (element,type,handler){
 		if (element.removeEventListener){
 			element.removeEventListener(type,handler,false);
@@ -75,7 +86,7 @@ var Eventutil = {
 		else {
 			element["on"+type] = null;
 		}
-	}
+	},
 	//阻止事件冒泡
 	stopPropagation: function (event){
 		if (event.stopPropagation){
