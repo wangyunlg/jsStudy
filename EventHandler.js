@@ -19,12 +19,28 @@ var Eventutil = {
 	getTarget: function (event){
 		return event.target || event.srcElement;
 	}
+	//阻止默认事件
 	preventDefault: function (event){
 		if (event.preventDefault){
 		event.preventDefault();
 		}
 		else {
 		event.returnValue = false;
+		}
+	}
+	//提供 mouseover,mouseout事件的相关元素的信息
+	getRelatedTarget: function (event){
+		if (event.relatedTarget){
+		return event.relatedTarget;
+		}
+		else if (event.fromElement){
+		return event.fromElement;
+		}
+		else if (event.toElement){
+		return event.toElement;
+		}
+		else {
+		return null;
 		}
 	}
 	removeHandler: function (element,type,handler){
@@ -38,6 +54,7 @@ var Eventutil = {
 			element["on"+type] = null;
 		}
 	}
+	//阻止事件冒泡
 	stopPropagation: function (event){
 		if (event.stopPropagation){
 		event.stopPropagation();
