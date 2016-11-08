@@ -76,6 +76,15 @@ var Eventutil = {
 			return -event.detail*40;
 		}
 	},
+	//获取字符编码；
+	getCharCode: function (event){
+		if (typeof event.charCode == "number"){
+			return event.charCode;   //IE9+,FireFox,Safari,Chrome
+		}
+		else {
+			return event.keyCode;    //IE8-,Opera;
+		}
+	}
 	removeHandler: function (element,type,handler){
 		if (element.removeEventListener){
 			element.removeEventListener(type,handler,false);
